@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security Monitoring</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="shell">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="title">SECURITY MONITORING</div>
+      <div class="subtitle">eBPF network behavior</div>
+    </div>
+    <nav class="nav">
+      <a class="nav-item" data-view="overview" onclick="navigate('overview')">Overview</a>
+      <a class="nav-item" data-view="live" onclick="navigate('live')">Live Telemetry</a>
+      <a class="nav-item" data-view="alerts" onclick="navigate('alerts')">Alerts</a>
+      <a class="nav-item" data-view="processes" onclick="navigate('processes')">Processes</a>
+      <a class="nav-item" data-view="investigations" onclick="navigate('investigations')">Investigations</a>
+      <a class="nav-item" data-view="console" onclick="navigate('console')">Console</a>
+      <a class="nav-item" data-view="status" onclick="navigate('status')">System Status</a>
+    </nav>
+  </div>
+  <div class="main">
+    <div class="statusbar">
+      <span><span class="dot off" id="sb-dot"></span><span id="sb-text">connecting…</span></span>
+    </div>
+    <div class="content" id="content"></div>
+  </div>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>

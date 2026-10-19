@@ -1,0 +1,271 @@
+:root {
+  --bg: #F6F6F4;
+  --panel: #FFFFFF;
+  --border: #DDDFE2;
+  --border-strong: #C7CACF;
+  --text: #1C2127;
+  --text-muted: #6B7280;
+  --text-faint: #9CA3AF;
+  --accent: #2B5A8C;
+  --accent-soft: #EAF1F8;
+  --sev-critical: #B3261E;
+  --sev-critical-bg: #FBEAE9;
+  --sev-warning: #B5750C;
+  --sev-warning-bg: #FBF1E0;
+  --sev-normal: #27714A;
+  --sev-normal-bg: #E9F4EE;
+  --radius: 3px;
+  --mono: ui-monospace, SFMono-Regular, "Cascadia Mono", Consolas, monospace;
+  --sans: -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ---- layout shell ---- */
+.shell { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-header .title {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+.sidebar-header .subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.nav { padding: 10px 8px; flex: 1; }
+.nav-item {
+  display: block;
+  padding: 8px 10px;
+  margin-bottom: 2px;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 12.5px;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+}
+.nav-item:hover { background: var(--bg); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-left-color: var(--accent);
+  font-weight: 600;
+}
+
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+.statusbar {
+  height: 42px;
+  flex-shrink: 0;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 18px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.statusbar .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  display: inline-block; margin-right: 5px;
+}
+.dot.on { background: var(--sev-normal); }
+.dot.off { background: var(--sev-critical); }
+
+.content { padding: 20px 24px; flex: 1; overflow-y: auto; }
+
+/* ---- generic panel ---- */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+}
+.panel-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.panel-header .meta { font-weight: 400; color: var(--text-faint); font-size: 11px; }
+.panel-body { padding: 12px 14px; }
+
+/* ---- stat tiles (Overview) ---- */
+.stat-row { display: flex; gap: 12px; margin-bottom: 16px; }
+.stat-tile {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.stat-tile .value { font-family: var(--mono); font-size: 24px; font-weight: 600; }
+.stat-tile .label { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+.stat-tile.alert .value { color: var(--sev-critical); }
+
+/* ---- tables ---- */
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th {
+  text-align: left;
+  padding: 7px 10px;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 11px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--bg);
+  vertical-align: top;
+}
+tr.clickable { cursor: pointer; }
+tr.clickable:hover td { background: var(--accent-soft); }
+.mono { font-family: var(--mono); }
+.muted { color: var(--text-muted); }
+
+/* ---- severity chips ---- */
+.chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.chip.critical { background: var(--sev-critical-bg); color: var(--sev-critical); }
+.chip.warning  { background: var(--sev-warning-bg); color: var(--sev-warning); }
+.chip.normal   { background: var(--sev-normal-bg); color: var(--sev-normal); }
+
+/* ---- investigation detail ---- */
+.kv-grid { display: grid; grid-template-columns: 140px 1fr; gap: 6px 12px; font-size: 12px; }
+.kv-grid dt { color: var(--text-muted); }
+.kv-grid dd { margin: 0; font-family: var(--mono); word-break: break-all; }
+
+.timeline-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bg);
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-ts { font-family: var(--mono); font-size: 11px; color: var(--text-faint); }
+.timeline-reason { font-size: 12.5px; margin-top: 3px; }
+.timeline-obs { margin: 6px 0 0 16px; padding: 0; font-size: 11.5px; color: var(--text-muted); }
+.timeline-obs li { margin-bottom: 2px; }
+
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 12.5px;
+}
+
+.back-link {
+  font-size: 12px; color: var(--accent); cursor: pointer; margin-bottom: 12px;
+  display: inline-block;
+}
+.back-link:hover { text-decoration: underline; }
+
+/* ---- Investigation Console (deliberately dark, separate from the rest of the app) ---- */
+.console-shell {
+  background: #1B1F24;
+  border: 1px solid #2C333B;
+  border-radius: var(--radius);
+  color: #D7DCE1;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 150px);
+  min-height: 420px;
+}
+.console-toolbar {
+  padding: 10px 14px;
+  border-bottom: 1px solid #2C333B;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--sans);
+  font-size: 12px;
+  color: #9AA4AE;
+}
+.console-toolbar input {
+  background: #11151A;
+  border: 1px solid #2C333B;
+  color: #D7DCE1;
+  border-radius: var(--radius);
+  padding: 4px 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  width: 90px;
+}
+.console-output {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 14px;
+}
+.console-entry { margin-bottom: 14px; }
+.console-prompt { color: #6FB6E8; }
+.console-prompt .pid-tag { color: #E8B86F; margin-left: 6px; font-size: 11px; }
+.console-meta { color: #6B7680; font-size: 11px; margin-left: 8px; }
+.console-stdout { white-space: pre-wrap; color: #D7DCE1; margin: 4px 0 0; }
+.console-stderr { white-space: pre-wrap; color: #E8846F; margin: 4px 0 0; }
+.console-status-ok { color: #6FCF97; }
+.console-status-timeout { color: #E8B86F; }
+.console-status-error { color: #E8846F; }
+.console-inputrow {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid #2C333B;
+}
+.console-inputrow input[type=text] {
+  flex: 1;
+  background: #11151A;
+  border: 1px solid #2C333B;
+  color: #D7DCE1;
+  border-radius: var(--radius);
+  padding: 7px 10px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+.console-inputrow button {
+  background: #2B5A8C;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 7px 16px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.console-inputrow button:disabled { opacity: 0.5; cursor: default; }
